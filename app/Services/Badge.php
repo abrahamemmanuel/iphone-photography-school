@@ -13,6 +13,7 @@ class BadgeService implements Badge
     {
         // 
     }
+    
     public function beginner(): int
     {
         return $badge;
