@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-class Achievement extends AchievementAbstract
+class Achievement
 {
     public function __construct()
     {
