@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Events\LessionWatched as LessionWatchedEvent;
 
 class LessonWatched
 {
@@ -18,7 +19,7 @@ class LessonWatched
     /**
      * Handle the event.
      */
-    public function handle(object $event): void
+    public function handle(LessionWatchedEvent $event): void
     {
         //
     }

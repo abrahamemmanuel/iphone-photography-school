@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Events\CommentWritten as CommentWrittenEvent;
 
 class CommentWritten
 {
@@ -18,7 +19,7 @@ class CommentWritten
     /**
      * Handle the event.
      */
-    public function handle(object $event): void
+    public function handle(CommentWrittenEvent $event): void
     {
         //
     }
