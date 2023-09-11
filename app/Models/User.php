@@ -42,4 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Get all of the comments for the user.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
