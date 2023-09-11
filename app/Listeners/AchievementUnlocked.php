@@ -4,22 +4,17 @@ namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Events\AchievementUnlocked as AchievementUnlockedEvent;
+use App\Services\Achievement as AchievementService;
 
 class AchievementUnlocked
 {
-    /**
-     * Create the event listener.
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Handle the event.
      */
-    public function handle(object $event): void
+    public function handle(AchievementUnlockedEvent $event): void
     {
-        //
+        AchievementService::setUnlockedAchievements($event);
     }
 }

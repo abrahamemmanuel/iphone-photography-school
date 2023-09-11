@@ -9,28 +9,20 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use App\Services\Achievement as AchievementService;
 
 class BadgeUnlocked
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $user;
+    public $badge_name;
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct($user, $badge_name)
     {
-        //
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
-     */
-    public function broadcastOn(): array
-    {
-        return [
-            new PrivateChannel('channel-name'),
-        ];
+        $this->user = $user;
+        $this->badge_name = $badge_name;
     }
 }

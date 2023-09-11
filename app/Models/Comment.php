@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Comment extends Model
 {
     use HasFactory;
+    
+    const FIRST_COMMENT_ACHIEVEMENT = 'First Comment Written Achievements';
+    const THREE_COMMENTS_ACHIEVEMENT = '3 Comments Written Achievements';
+    const FIVE_COMMENTS_ACHIEVEMENT = '5 Comments Written Achievements';
+    const TEN_COMMENTS_ACHIEVEMENT = '10 Comments Written Achievements';
+    const TWENTY_COMMENTS_ACHIEVEMENT = '20 Comments Written Achievements';
 
     /**
      * The attributes that are mass assignable.

@@ -14,23 +14,14 @@ class AchievementUnlocked
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $user;
+    public $achievement_name;
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct($user, $achievement_name)
     {
-        //
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
-     */
-    public function broadcastOn(): array
-    {
-        return [
-            new PrivateChannel('channel-name'),
-        ];
+        $this->user = $user;
+        $this->achievement_name = $achievement_name;
     }
 }

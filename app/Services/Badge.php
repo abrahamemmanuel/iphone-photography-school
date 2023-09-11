@@ -7,39 +7,28 @@ use App\Interfaces\Badge;
 
 class BadgeService implements Badge
 {
+    const BEGINNER = 'Beginner';
+    const INTERMEDIATE = 'Intermediate';
+    const ADVANCED = 'Advanced';
+    const MASTER = 'Master';
 
-    public int $achievements;
-
-    public function __construct($achievements)
-    {
-        $this->achievements = $achievements;
-    }
-    
     public function beginner(): string
     {
-        if($this->achievements === 0) {
-            return "Beginner";
-        }
+        return self::BEGINNER;
     }
 
     public function intermediate(): string
     {
-        if($this->achievements === 4) {
-            return "Intermediate";
-        }
+        return self::INTERMEDIATE;
     }
 
     public function advanced(): string
     {
-        if($this->achievements === 8) {
-            return "Advanced";
-        }
+        return self::ADVANCED;
     }
 
     public function master(): string
     {
-        if($this->achievements === 10) {
-            return "Master";
-        }
+        return self::MASTER;
     }
 }

@@ -10,6 +10,8 @@ class AchievementsController extends Controller
 {
     public function index($user)
     {
+        Achievement::setUser($user);
+        dump(Achievement::getAchievements());
         return response()->json([
             'unlocked_achievements' => [],
             'next_available_achievements' => [],
