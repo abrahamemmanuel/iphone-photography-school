@@ -7,30 +7,39 @@ use App\Interfaces\Badge;
 
 class BadgeService implements Badge
 {
-    public $badge int
 
-    public function __construct()
+    public int $achievements;
+
+    public function __construct($achievements)
     {
-        // 
+        $this->achievements = $achievements;
     }
     
-    public function beginner(): int
+    public function beginner(): string
     {
-        return $badge;
+        if($this->achievements === 0) {
+            return "Beginner";
+        }
     }
 
-    public function intermediate(): int
+    public function intermediate(): string
     {
-        return $badge;
+        if($this->achievements === 4) {
+            return "Intermediate";
+        }
     }
 
-    public function advanced(): int
+    public function advanced(): string
     {
-        return $badge;
+        if($this->achievements === 8) {
+            return "Advanced";
+        }
     }
 
-    public function master(): int
+    public function master(): string
     {
-        return $badge;
+        if($this->achievements === 10) {
+            return "Master";
+        }
     }
 }
