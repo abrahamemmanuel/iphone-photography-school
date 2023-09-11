@@ -18,6 +18,6 @@ class CommentWritten
      */
     public function handle(CommentWrittenEvent $event): void
     {
-        CommentAchievement::setComment($event->comment);
+        CommentAchievement::setCommentAndIncrementAchievements($event->comment);
     }
 }

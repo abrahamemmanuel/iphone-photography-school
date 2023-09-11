@@ -22,13 +22,20 @@ class ExampleTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $user = User::factory()->create();
-        $comment = Comment::factory()->create([
-            'user_id' => $user->id,
-            'body' => 'This is first comment'
-        ]);
-        event(new \App\Events\CommentWritten($comment));
+        $this->commentWriter(3, $user);
         $response = $this->get("/users/{$user->id}/achievements");
         
         $response->assertStatus(200);
+    }
+
+    public function commentWriter($number, $user)
+    {
+        for($i = 0; $i < $number; $i++) {
+            $comment = Comment::factory()->create([
+                'user_id' => $user->id,
+                'body' => 'This is '.$i.' comment'
+            ]);
+            event(new \App\Events\CommentWritten($comment));
+        }
     }
 }

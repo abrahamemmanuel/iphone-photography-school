@@ -15,9 +15,10 @@ class Achievement
     public static int $achievements = 0;
     public static string $badge;
 
-    public static function setComment($payload): void
+    public static function setCommentAndIncrementAchievements($payload): void
     {
         self::$comment = $payload;
+        self::$achievements++;
     }
 
     public static function getComment(): Comment
@@ -25,44 +26,19 @@ class Achievement
         return self::$comment;
     }
 
-    public static function getUser($user_id): void
+    public static function getUser($user_id): User
     {
         return User::find($user_id);
     }
 
-    public static function unLockAchievements($user_id)
+    public static function unLockAchievements($user_id): void
     {
-        $user = self::getUser($user_id);
-        $comment = self::getComment();
-        self::unLockCommentAchievements($user, $comment);
-        self::$badge = new BadgeService(self::$achievements);
+      
     }
 
-    public static function unLockCommentAchievements($user, $comment)
+    public static function unLockCommentAchievements($user, $comment): int
     {
-        //unlock comment achievements
-        if($user->id === $comment->user_id) {
-            if($user->comments->count() === 1) {
-                self::$achievements++;
-            }
-
-            if($user->comments->count() === 3) {
-                self::$achievements++;
-            }
-
-            if($user->comments->count() === 5) {
-                self::$achievements++;
-            }
-
-            if($user->comments->count() === 10) {
-                self::$achievements++;
-            }
-
-            if($user->comments->count() === 20) {
-                self::$achievements++;
-            }
-            return self::$achievements;
-        }
+       
     }
 
     public static function getUnlockedAchievements(): array
