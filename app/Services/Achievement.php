@@ -29,7 +29,7 @@ class Achievement
 
     public static function setUnlockedAchievements($payload): void
     {
-        self::$unlocked_achievements[] = $payload->achievement_name;
+        array_push(self::$unlocked_achievements, $payload->achievement_name);
         self::unlockBadges($payload);
     }
 
@@ -60,30 +60,22 @@ class Achievement
         if(self::$user->id == self::$comment->user_id){
             if(self::$user->comments->count() == 1) {
                 self::fireAchievementUnlockedEvent(self::$user, Comment::FIRST_COMMENT_ACHIEVEMENT);
-                array_push(self::$unlocked_achievements, Comment::FIRST_COMMENT_ACHIEVEMENT);
                 array_push(self::$next_available_achievements, Comment::THREE_COMMENTS_ACHIEVEMENT);
-                dump(self::$user->comments->count());
             }
 
             if(self::$user->comments->count() == 3) {
                 self::fireAchievementUnlockedEvent(self::$user, Comment::THREE_COMMENTS_ACHIEVEMENT);
-                array_push(self::$unlocked_achievements, Comment::THREE_COMMENTS_ACHIEVEMENT);
                 array_push(self::$next_available_achievements, Comment::FIVE_COMMENTS_ACHIEVEMENT);
-                dump(self::$unlocked_achievements);
             }
 
             if(self::$user->comments->count() == 5) {
                 self::fireAchievementUnlockedEvent(self::$user, Comment::FIVE_COMMENTS_ACHIEVEMENT);
-                array_push(self::$unlocked_achievements, Comment::FIVE_COMMENTS_ACHIEVEMENT);
                 array_push(self::$next_available_achievements, Comment::TEN_COMMENTS_ACHIEVEMENT);
-                dump(self::$unlocked_achievements);
             }
 
             if(self::$user->comments->count() == 10) {
                 self::fireAchievementUnlockedEvent(self::$user, Comment::TEN_COMMENTS_ACHIEVEMENT);
-                array_push(self::$unlocked_achievements, Comment::TEN_COMMENTS_ACHIEVEMENT);
                 array_push(self::$next_available_achievements, Comment::TWENTY_COMMENTS_ACHIEVEMENT);
-                dump(self::$unlocked_achievements);
             }
         }
     }
