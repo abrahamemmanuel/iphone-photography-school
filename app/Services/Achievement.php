@@ -29,7 +29,6 @@ class Achievement
 
     public static function setUnlockedAchievements($payload): void
     {
-        array_push(self::$unlocked_achievements, $payload->achievement_name);
         self::unlockBadges($payload);
     }
 
@@ -37,12 +36,17 @@ class Achievement
     {
         if(self::$user->id === $payload->user->id){
             self::$current_badge = $payload->badge_name;
-            if($payload->badge_name == Badge::INTERMEDIATE){
+            if(self::$current_badge == Badge::BEGINNER){
+                self::$next_badge = Badge::INTERMEDIATE;
+                self::$remaing_to_unlock_next_badge = 4 - count(self::$unlocked_achievements);
+            }
+
+            if(self::$current_badge == Badge::INTERMEDIATE){
                 self::$next_badge = Badge::ADVANCED;
                 self::$remaing_to_unlock_next_badge = 8 - count(self::$unlocked_achievements);
             }
 
-            if($payload->badge_name == Badge::ADVANCED){
+            if(self::$current_badge == Badge::ADVANCED){
                 self::$next_badge = Badge::MASTER;
                 self::$remaing_to_unlock_next_badge = 10 - count(self::$unlocked_achievements);
             }
@@ -50,31 +54,30 @@ class Achievement
        
     }
 
-    public static function setUser(int $user_id): void
-    {
-        self::$user = self::$user ?? User::find($user_id);
-    }
-
     public static function unlockCommentAchievements(): void
     {
         if(self::$user->id == self::$comment->user_id){
             if(self::$user->comments->count() == 1) {
                 self::fireAchievementUnlockedEvent(self::$user, Comment::FIRST_COMMENT_ACHIEVEMENT);
+                array_push(self::$unlocked_achievements, Comment::FIRST_COMMENT_ACHIEVEMENT);
                 array_push(self::$next_available_achievements, Comment::THREE_COMMENTS_ACHIEVEMENT);
             }
 
             if(self::$user->comments->count() == 3) {
                 self::fireAchievementUnlockedEvent(self::$user, Comment::THREE_COMMENTS_ACHIEVEMENT);
+                array_push(self::$unlocked_achievements, Comment::THREE_COMMENTS_ACHIEVEMENT);
                 array_push(self::$next_available_achievements, Comment::FIVE_COMMENTS_ACHIEVEMENT);
             }
 
             if(self::$user->comments->count() == 5) {
                 self::fireAchievementUnlockedEvent(self::$user, Comment::FIVE_COMMENTS_ACHIEVEMENT);
+                array_push(self::$unlocked_achievements, Comment::FIVE_COMMENTS_ACHIEVEMENT);
                 array_push(self::$next_available_achievements, Comment::TEN_COMMENTS_ACHIEVEMENT);
             }
 
             if(self::$user->comments->count() == 10) {
                 self::fireAchievementUnlockedEvent(self::$user, Comment::TEN_COMMENTS_ACHIEVEMENT);
+                array_push(self::$unlocked_achievements, Comment::TEN_COMMENTS_ACHIEVEMENT);
                 array_push(self::$next_available_achievements, Comment::TWENTY_COMMENTS_ACHIEVEMENT);
             }
         }
@@ -132,5 +135,10 @@ class Achievement
     public static function fireBadgeUnlockedEvent($user, $badge_name): void
     {
         event(new AchievementUnlocked($user, $badge_name));
+    }
+
+    public static function setUser(int $user_id): void
+    {
+        self::$user = self::$user ?? User::find($user_id);
     }
 }
