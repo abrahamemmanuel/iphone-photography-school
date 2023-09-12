@@ -22,7 +22,7 @@ class ExampleTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $user = User::factory()->create();
-        $this->commentWriter(4, $user);
+        $this->commentWriter(2, $user);
         $response = $this->get("/users/{$user->id}/achievements");
         
         $response->assertStatus(200);

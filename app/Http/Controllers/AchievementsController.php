@@ -11,17 +11,17 @@ class AchievementsController extends Controller
     public function index($user)
     {
         Achievement::setUser($user);
-        dump(count(Achievement::$unlocked_achievements));
-        dump(Achievement::$next_available_achievements);
-        dump(Achievement::$current_badge);
-        dump(Achievement::$next_badge);
-        dump(Achievement::$remaing_to_unlock_next_badge);
+        dump(Achievement::getUnlockedAchievements());
+        dump(Achievement::getNextAvailableAchievements());
+        dump(Achievement::getCurrentBadge());
+        dump(Achievement::getNextBadge());
+        dump(Achievement::getRemainingToUnlockNextBadge());
         return response()->json([
-            'unlocked_achievements' => Achievement::$unlocked_achievements,
-            'next_available_achievements' => Achievement::$next_available_achievements,
-            'current_badge' => Achievement::$current_badge,
-            'next_badge' => Achievement::$next_badge,
-            'remaing_to_unlock_next_badge' => Achievement::$remaing_to_unlock_next_badge,
+            'unlocked_achievements' => Achievement::getUnlockedAchievements(),
+            'next_available_achievements' => Achievement::getNextAvailableAchievements(),
+            'current_badge' => Achievement::getCurrentBadge(),
+            'next_badge' => Achievement::getNextBadge(),
+            'remaing_to_unlock_next_badge' => Achievement::getRemainingToUnlockNextBadge(),
         ]);
     }
 }

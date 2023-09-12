@@ -16,5 +16,6 @@ class AchievementUnlocked
     public function handle(AchievementUnlockedEvent $event): void
     {
         AchievementService::setUnlockedAchievements($event);
+        dump('AchievementUnlocked listener fired');
     }
 }
