@@ -21,7 +21,7 @@ class AchievementsController extends Controller
             'next_available_achievements' => Achievement::getNextAvailableAchievements(),
             'current_badge' => Achievement::getCurrentBadge(),
             'next_badge' => Achievement::getNextBadge(),
-            'remaing_to_unlock_next_badge' => Achievement::getRemainingToUnlockNextBadge(),
+            'remaining_to_unlock_next_badge' => Achievement::getRemainingToUnlockNextBadge(),
         ]);
     }
 }

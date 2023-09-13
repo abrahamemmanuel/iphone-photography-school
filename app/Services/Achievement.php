@@ -18,8 +18,8 @@ class Achievement
     public static array $unlocked_achievements = [];
     public static string $current_badge = 'Beginner';
     public static string $next_badge = 'Intermediate';
-    public static int $remaing_to_unlock_next_badge = 4;
-    public static string $next_available_comment_achievement = '';
+    public static int $remaining_to_unlock_next_badge = 4;
+    public static string $next_available_comment_achievement = 'You are yet to unlock any achievement';
     public static string $next_available_watched_achievement = '';
 
     public static function setUnlockedCommentAchievements($payload): void
@@ -58,16 +58,21 @@ class Achievement
         }
     }
 
-    public static function getUnlockedAchievements(): array
+    public static function getUnlockedAchievements(): array | string
     {
-        return self::$unlocked_achievements;
+        return count(self::$unlocked_achievements) > 0 ? self::$unlocked_achievements : 'No unlocked achievements yet';
     }
 
-    public static function getNextAvailableAchievements(): array
+    public static function getNextAvailableAchievements(): array | string
     {
-        return [
-            self::$next_available_comment_achievement
-        ];
+        if(self::$next_available_comment_achievement == 'You are yet to unlock any achievement' ){
+            return self::$next_available_comment_achievement;
+        }elseif(self::$next_available_comment_achievement == 'You have unlocked all comment achievements')
+        {
+            return self::$next_available_comment_achievement;
+        }else{
+            return [self::$next_available_comment_achievement];
+        }
     }
 
     public static function getCurrentBadge(): string
@@ -82,7 +87,7 @@ class Achievement
 
     public static function getRemainingToUnlockNextBadge(): int
     {
-        return self::$remaing_to_unlock_next_badge;
+        return self::$remaining_to_unlock_next_badge;
     }
 
     public static function fireAchievementUnlockedEvent($user, $achievement_name): void
@@ -132,17 +137,17 @@ class Achievement
     {
         $achievements = count(self::$unlocked_achievements);
         if($achievements < 4){
-            self::$remaing_to_unlock_next_badge = 4 - $achievements;
+            self::$remaining_to_unlock_next_badge = 4 - $achievements;
         }
 
         if($achievements >= 4){
             self::fireBadgeUnlockedEvent(self::$user, Badge::INTERMEDIATE);
-            self::$remaing_to_unlock_next_badge = 8 - $achievements;
+            self::$remaining_to_unlock_next_badge = 8 - $achievements;
         }
 
         if($achievements >= 8){
             self::fireBadgeUnlockedEvent(self::$user, Badge::ADVANCED);
-            self::$remaing_to_unlock_next_badge = 10 - $achievements;
+            self::$remaining_to_unlock_next_badge = 10 - $achievements;
         }
 
         if($achievements >= 10){
