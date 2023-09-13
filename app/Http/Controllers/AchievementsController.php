@@ -10,12 +10,18 @@ class AchievementsController extends Controller
 {
     public function index($user)
     {
+        Achievement::setUser($user);
+        dump(Achievement::getUnlockedAchievements());
+        dump(Achievement::getNextAvailableAchievements());
+        dump(Achievement::getCurrentBadge());
+        dump(Achievement::getNextBadge());
+        dump(Achievement::getRemainingToUnlockNextBadge());
         return response()->json([
-            'unlocked_achievements' => [],
-            'next_available_achievements' => [],
-            'current_badge' => '',
-            'next_badge' => '',
-            'remaing_to_unlock_next_badge' => 0
+            'unlocked_achievements' => Achievement::getUnlockedAchievements(),
+            'next_available_achievements' => Achievement::getNextAvailableAchievements(),
+            'current_badge' => Achievement::getCurrentBadge(),
+            'next_badge' => Achievement::getNextBadge(),
+            'remaining_to_unlock_next_badge' => Achievement::getRemainingToUnlockNextBadge(),
         ]);
     }
 }
