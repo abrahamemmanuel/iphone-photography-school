@@ -4,23 +4,18 @@ namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Events\LessionWatched as LessionWatchedEvent;
+use App\Events\LessonWatched as LessionWatchedEvent;
+use App\Services\Achievement as LessionAchievement;
 
 class LessonWatched
 {
-    /**
-     * Create the event listener.
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Handle the event.
      */
     public function handle(LessionWatchedEvent $event): void
     {
-        //
+        LessionAchievement::setUnlockedLessonAchievements($event);
+        dump('LessonWatched listener fired');
     }
 }

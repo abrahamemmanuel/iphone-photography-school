@@ -11,11 +11,11 @@ class AchievementsController extends Controller
     public function index($user)
     {
         Achievement::setUser($user);
-        dump(Achievement::getUnlockedAchievements());
-        dump(Achievement::getNextAvailableAchievements());
-        dump(Achievement::getCurrentBadge());
-        dump(Achievement::getNextBadge());
-        dump(Achievement::getRemainingToUnlockNextBadge());
+        // dump(Achievement::getUnlockedAchievements());
+        // dump(Achievement::getNextAvailableAchievements());
+        // dump(Achievement::getCurrentBadge());
+        // dump(Achievement::getNextBadge());
+        // dump(Achievement::getRemainingToUnlockNextBadge());
         return response()->json([
             'unlocked_achievements' => Achievement::getUnlockedAchievements(),
             'next_available_achievements' => Achievement::getNextAvailableAchievements(),
