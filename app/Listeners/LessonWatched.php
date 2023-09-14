@@ -16,6 +16,5 @@ class LessonWatched
     public function handle(LessionWatchedEvent $event): void
     {
         LessionAchievement::setUnlockedLessonAchievements($event);
-        dump('LessonWatched listener fired');
     }
 }

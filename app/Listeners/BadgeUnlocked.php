@@ -16,6 +16,5 @@ class BadgeUnlocked
     public function handle(BadgeUnlockedEvent $event): void
     {
         AchievementService::setUnlockedBadges($event);
-        dump('BadgeUnlocked listener fired');
     }
 }
