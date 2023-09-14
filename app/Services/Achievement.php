@@ -5,28 +5,42 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\Lesson;
 use App\Services\Badge;
 use App\Repositories\CommentAchievement;
 use App\Repositories\LessonWatchedAchievement;
 use App\Events\AchievementUnlocked;
 use App\Events\BadgeUnlocked;
+use Illuminate\Support\Facades\DB;
 
 class Achievement
 {
-    public static $comment;
+    public static ?object $comment = null;
+    public static ?object $lesson = null;
     public static ?object $user = null;
+    public static ?object $lesson_user = null;
     public static array $unlocked_achievements = [];
-    public static string $current_badge = 'Beginner';
-    public static string $next_badge = 'Intermediate';
+    public static string $current_badge = Badge::BEGINNER;
+    public static string $next_badge = Badge::INTERMEDIATE;
     public static int $remaining_to_unlock_next_badge = 4;
-    public static string $next_available_comment_achievement = 'You are yet to unlock any achievement';
-    public static string $next_available_watched_achievement = '';
+    public static string $next_available_comment_achievement = Comment::FIRST_COMMENT_ACHIEVEMENT;
+    public static string $last_comment_achievement = '';
+    public static string $last_watched_achievement = '';
+    public static string $next_available_watched_achievement = Lesson::FIRST_LESSON_WATCHED_ACHIEVEMENT;
 
     public static function setUnlockedCommentAchievements($payload): void
     {
-        self::$comment = $payload;
+        self::$comment = Comment::find($payload->id) ?? $payload;
         self::$user = User::find(self::$comment->user_id);
         self::unlockCommentAchievements();
+    }
+
+    public static function setUnlockedLessonAchievements($payload): void
+    {
+        self::$lesson = Lesson::find($payload->lesson->id) ?? $payload->lesson;
+        self::$user = User::find($payload->user->id) ?? $payload->user;
+        self::$lesson_user = self::setLessonUser(self::$user->id, self::$lesson->id);
+        self::unlockLessonAchievements();
     }
 
     public static function setUnlockedAchievements($payload): void
@@ -50,10 +64,16 @@ class Achievement
         }
     }
 
+    public static function unlockLessonAchievements(): void
+    {
+        if(self::$user->id == self::$lesson_user->user_id){
+            self::lessonAchievementUnlocker();
+        }
+    }
+
     public static function unlockBadges($payload): void
     {
-        if($payload->user->id === self::$user->id)
-        {
+        if($payload->user->id === self::$user->id){
             self::badgeUnlocker();
         }
     }
@@ -65,14 +85,27 @@ class Achievement
 
     public static function getNextAvailableAchievements(): array | string
     {
-        if(self::$next_available_comment_achievement == 'You are yet to unlock any achievement' ){
-            return self::$next_available_comment_achievement;
-        }elseif(self::$next_available_comment_achievement == 'You have unlocked all comment achievements')
-        {
-            return self::$next_available_comment_achievement;
-        }else{
-            return [self::$next_available_comment_achievement];
+
+        if(count(self::$unlocked_achievements) == 10){
+            return 'You have unlocked all achievements';
         }
+
+        if(self::$last_comment_achievement != '' && self::$last_watched_achievement == ''){
+            return [
+                self::$next_available_watched_achievement
+            ];
+        }
+
+        if(self::$last_comment_achievement == '' && self::$last_watched_achievement != ''){
+            return [
+                self::$next_available_comment_achievement
+            ];
+        }
+
+        return [
+            self::$next_available_comment_achievement,
+            self::$next_available_watched_achievement
+        ];
     }
 
     public static function getCurrentBadge(): string
@@ -105,31 +138,64 @@ class Achievement
         self::$user = self::$user ?? User::find($user_id);
     }
 
+    public static function setLessonUser(int $user_id, int $lesson_id): object | null
+    {
+        return DB::table('lesson_user')->where('user_id', self::$user->id)->where('lesson_id', self::$lesson->id)->first();
+    }
+
     public static function commentAchievementUnlocker(): void
     {
-        if(self::$user->comments->count() == 1) {
+        if(self::$user->comments->count() == 1){
             self::fireAchievementUnlockedEvent(self::$user, Comment::FIRST_COMMENT_ACHIEVEMENT);
             self::$next_available_comment_achievement = Comment::THREE_COMMENTS_ACHIEVEMENT;
         }
 
-        if(self::$user->comments->count() == 3) {
+        if(self::$user->comments->count() == 3){
             self::fireAchievementUnlockedEvent(self::$user, Comment::THREE_COMMENTS_ACHIEVEMENT);
             self::$next_available_comment_achievement = Comment::FIVE_COMMENTS_ACHIEVEMENT;
         }
 
-        if(self::$user->comments->count() == 5) {
+        if(self::$user->comments->count() == 5){
             self::fireAchievementUnlockedEvent(self::$user, Comment::FIVE_COMMENTS_ACHIEVEMENT);
             self::$next_available_comment_achievement = Comment::TEN_COMMENTS_ACHIEVEMENT;
         }
 
-        if(self::$user->comments->count() == 10) {
+        if(self::$user->comments->count() == 10){
             self::fireAchievementUnlockedEvent(self::$user, Comment::TEN_COMMENTS_ACHIEVEMENT);
             self::$next_available_comment_achievement = Comment::TWENTY_COMMENTS_ACHIEVEMENT;
         }
 
-        if(self::$user->comments->count() == 20) {
+        if(self::$user->comments->count() == 20){
             self::fireAchievementUnlockedEvent(self::$user, Comment::TWENTY_COMMENTS_ACHIEVEMENT);
-            self::$next_available_comment_achievement = 'You have unlocked all comment achievements';
+            self::$last_comment_achievement = Comment::TWENTY_COMMENTS_ACHIEVEMENT;
+        }
+    }
+
+    public static function lessonAchievementUnlocker()
+    {
+        if(self::$user->watched->count() == 1){
+            self::fireAchievementUnlockedEvent(self::$user, Lesson::FIRST_LESSON_WATCHED_ACHIEVEMENT);
+            self::$next_available_watched_achievement = Lesson::FIVE_LESSONS_WATCHED_ACHIEVEMENT;
+        }
+
+        if(self::$user->watched->count() == 5){
+            self::fireAchievementUnlockedEvent(self::$user, Lesson::FIVE_LESSONS_WATCHED_ACHIEVEMENT);
+            self::$next_available_watched_achievement = Lesson::TEN_LESSONS_WATCHED_ACHIEVEMENT;
+        }
+
+        if(self::$user->watched->count() == 10){
+            self::fireAchievementUnlockedEvent(self::$user, Lesson::TEN_LESSONS_WATCHED_ACHIEVEMENT);
+            self::$next_available_watched_achievement = Lesson::TWENTY_FIVE_LESSONS_WATCHED_ACHIEVEMENT;
+        }
+
+        if(self::$user->watched->count() == 25){
+            self::fireAchievementUnlockedEvent(self::$user, Lesson::TWENTY_FIVE_LESSONS_WATCHED_ACHIEVEMENT);
+            self::$next_available_watched_achievement = Lesson::FIFTY_LESSONS_WATCHED_ACHIEVEMENT;
+        }
+
+        if(self::$user->watched->count() == 50){
+            self::fireAchievementUnlockedEvent(self::$user, Lesson::FIFTY_LESSONS_WATCHED_ACHIEVEMENT);
+            self::$last_watched_achievement = Lesson::FIFTY_LESSONS_WATCHED_ACHIEVEMENT;
         }
     }
 
@@ -152,7 +218,7 @@ class Achievement
 
         if($achievements >= 10){
             self::fireBadgeUnlockedEvent(self::$user, Badge::MASTER);
-            self::$remaing_to_unlock_next_badge = 0;
+            self::$remaining_to_unlock_next_badge = 0;
         }
     }
 
