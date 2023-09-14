@@ -16,8 +16,8 @@ class Achievement
     public static $comment;
     public static ?object $user = null;
     public static array $unlocked_achievements = [];
-    public static string $current_badge = 'Beginner';
-    public static string $next_badge = 'Intermediate';
+    public static string $current_badge = Badge::BEGINNER;
+    public static string $next_badge = Badge::INTERMEDIATE;
     public static int $remaining_to_unlock_next_badge = 4;
     public static string $next_available_comment_achievement = 'You are yet to unlock any achievement';
     public static string $next_available_watched_achievement = '';
@@ -52,8 +52,7 @@ class Achievement
 
     public static function unlockBadges($payload): void
     {
-        if($payload->user->id === self::$user->id)
-        {
+        if($payload->user->id === self::$user->id){
             self::badgeUnlocker();
         }
     }
@@ -107,27 +106,27 @@ class Achievement
 
     public static function commentAchievementUnlocker(): void
     {
-        if(self::$user->comments->count() == 1) {
+        if(self::$user->comments->count() == 1){
             self::fireAchievementUnlockedEvent(self::$user, Comment::FIRST_COMMENT_ACHIEVEMENT);
             self::$next_available_comment_achievement = Comment::THREE_COMMENTS_ACHIEVEMENT;
         }
 
-        if(self::$user->comments->count() == 3) {
+        if(self::$user->comments->count() == 3){
             self::fireAchievementUnlockedEvent(self::$user, Comment::THREE_COMMENTS_ACHIEVEMENT);
             self::$next_available_comment_achievement = Comment::FIVE_COMMENTS_ACHIEVEMENT;
         }
 
-        if(self::$user->comments->count() == 5) {
+        if(self::$user->comments->count() == 5){
             self::fireAchievementUnlockedEvent(self::$user, Comment::FIVE_COMMENTS_ACHIEVEMENT);
             self::$next_available_comment_achievement = Comment::TEN_COMMENTS_ACHIEVEMENT;
         }
 
-        if(self::$user->comments->count() == 10) {
+        if(self::$user->comments->count() == 10){
             self::fireAchievementUnlockedEvent(self::$user, Comment::TEN_COMMENTS_ACHIEVEMENT);
             self::$next_available_comment_achievement = Comment::TWENTY_COMMENTS_ACHIEVEMENT;
         }
 
-        if(self::$user->comments->count() == 20) {
+        if(self::$user->comments->count() == 20){
             self::fireAchievementUnlockedEvent(self::$user, Comment::TWENTY_COMMENTS_ACHIEVEMENT);
             self::$next_available_comment_achievement = 'You have unlocked all comment achievements';
         }

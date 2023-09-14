@@ -15,11 +15,21 @@ use App\Repositories\LessonWatchedAchievement;
 class ExampleTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * test
      * A basic test example.
      */
-    public function test_should_assert_that_user_has_no_comment_written_achievements_and_has_four_achievements_to_unlock_intermediate_badge()
+    public function test_that_true_is_true(): void
+    {
+        $this->assertTrue(true);
+    }
+
+    /**
+     * test
+     * A basic test example.
+     */
+    public function test_should_assert_that_user_has_no_comment_written_achievements_and_has_four_achievements_to_unlock_intermediate_badge(): void
     {
         $this->withoutExceptionHandling();
         $user = User::factory()->create();
@@ -41,7 +51,7 @@ class ExampleTest extends TestCase
      * test
      * A basic test example.
      */
-    public function test_should_assert_that_user_achieves_first_comment_written_achievement_and_has_three_achievements_to_unlock_intermediate_badge()
+    public function test_should_assert_that_user_achieves_first_comment_written_achievement_and_has_three_achievements_to_unlock_intermediate_badge(): void
     {
         $this->withoutExceptionHandling();
         $user = User::factory()->create();
@@ -49,10 +59,10 @@ class ExampleTest extends TestCase
         $response = $this->get("/users/{$user->id}/achievements");
         $response->assertJsonFragment([
             'unlocked_achievements' => [
-                'First Comment Written Achievements'
+                'First Comment Written'
             ],
             'next_available_achievements' => [
-                '3 Comments Written Achievements'
+                '3 Comments Written'
             ],
             'current_badge' => 'Beginner',
             'next_badge' => 'Intermediate',
@@ -72,7 +82,7 @@ class ExampleTest extends TestCase
      * test
      * A basic test example.
      */
-    public function test_should_assert_that_user_achieves_three_comment_written_achievement_and_has_two_achievements_to_unlock_intermediate_badge()
+    public function test_should_assert_that_user_achieves_three_comment_written_achievement_and_has_two_achievements_to_unlock_intermediate_badge(): void
     {
         $this->withoutExceptionHandling();
         $user = User::factory()->create();
@@ -80,11 +90,11 @@ class ExampleTest extends TestCase
         $response = $this->get("/users/{$user->id}/achievements");
         $response->assertJsonFragment([
             'unlocked_achievements' => [
-                'First Comment Written Achievements',
-                '3 Comments Written Achievements',
+                'First Comment Written',
+                '3 Comments Written',
             ],
             'next_available_achievements' => [
-                '5 Comments Written Achievements'
+                '5 Comments Written'
             ],
             'current_badge' => 'Beginner',
             'next_badge' => 'Intermediate',
@@ -104,7 +114,7 @@ class ExampleTest extends TestCase
     * test
     * A basic test example.
     */
-    public function test_should_assert_that_user_achieves_five_comment_written_achievement_and_has_one_achievement_to_unlock_intermediate_badge()
+    public function test_should_assert_that_user_achieves_five_comment_written_achievement_and_has_one_achievement_to_unlock_intermediate_badge(): void
     {
         $this->withoutExceptionHandling();
         $user = User::factory()->create();
@@ -112,12 +122,12 @@ class ExampleTest extends TestCase
         $response = $this->get("/users/{$user->id}/achievements");
         $response->assertJsonFragment([
             'unlocked_achievements' => [
-                'First Comment Written Achievements',
-                '3 Comments Written Achievements',
-                '5 Comments Written Achievements',
+                'First Comment Written',
+                '3 Comments Written',
+                '5 Comments Written',
             ],
             'next_available_achievements' => [
-                '10 Comments Written Achievements'
+                '10 Comments Written'
             ],
             'current_badge' => 'Beginner',
             'next_badge' => 'Intermediate',
@@ -137,7 +147,7 @@ class ExampleTest extends TestCase
      * test
      * A basic test example.
      */
-    public function test_should_assert_that_user_achieves_ten_comment_written_achievement_and_has_unlocked_intermediate_badge()
+    public function test_should_assert_that_user_achieves_ten_comment_written_achievement_and_has_unlocked_intermediate_badge(): void
     {
         $this->withoutExceptionHandling();
         $user = User::factory()->create();
@@ -145,13 +155,13 @@ class ExampleTest extends TestCase
         $response = $this->get("/users/{$user->id}/achievements");
         $response->assertJsonFragment([
             'unlocked_achievements' => [
-                'First Comment Written Achievements',
-                '3 Comments Written Achievements',
-                '5 Comments Written Achievements',
-                '10 Comments Written Achievements',
+                'First Comment Written',
+                '3 Comments Written',
+                '5 Comments Written',
+                '10 Comments Written',
             ],
             'next_available_achievements' => [
-                '20 Comments Written Achievements'
+                '20 Comments Written'
             ],
             'current_badge' => 'Intermediate',
             'next_badge' => 'Advanced',
@@ -171,7 +181,7 @@ class ExampleTest extends TestCase
      * test
      * A basic test example.
      */
-    public function test_should_assert_that_user_achieves_twenty_comment_written_achievement_and_has_four_achievement_to_unlock_advanced_badge()
+    public function test_should_assert_that_user_achieves_twenty_comment_written_achievement_and_has_four_achievement_to_unlock_advanced_badge(): void
     {
         $this->withoutExceptionHandling();
         $user = User::factory()->create();
@@ -179,11 +189,11 @@ class ExampleTest extends TestCase
         $response = $this->get("/users/{$user->id}/achievements");
         $response->assertJsonFragment([
             'unlocked_achievements' => [
-                'First Comment Written Achievements',
-                '3 Comments Written Achievements',
-                '5 Comments Written Achievements',
-                '10 Comments Written Achievements',
-                '20 Comments Written Achievements',
+                'First Comment Written',
+                '3 Comments Written',
+                '5 Comments Written',
+                '10 Comments Written',
+                '20 Comments Written',
             ],
             'next_available_achievements' => 'You have unlocked all comment achievements',
             'current_badge' => 'Intermediate',
@@ -197,7 +207,7 @@ class ExampleTest extends TestCase
         $this->resetAllAchievementValues();
     }
 
-    public function commentWriter($number, $user)
+    public function commentWriter($number, $user): void
     {
         for($i = 0; $i < $number; $i++) {
             $comment = Comment::factory()->create([
@@ -208,7 +218,7 @@ class ExampleTest extends TestCase
         }
     }
 
-    public function resetAllAchievementValues()
+    public function resetAllAchievementValues(): void
     {
         Achievement::$comment = null;
         Achievement::$user = null;
