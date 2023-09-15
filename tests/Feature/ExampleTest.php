@@ -743,6 +743,337 @@ class ExampleTest extends TestCase
         $this->resetAllAchievementValues();
     }
 
+     /**
+     * test
+     * A basic test example.
+     */
+    public function test_should_assert_that_user_has_not_achieve_first_lesson_and_first_comment_achievements_and_has_4_achievements_to_unlock_intermediate_badge(): void
+    {
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create();
+        $response = $this->get("/users/{$user->id}/achievements");
+        $response->assertJsonFragment([
+            'unlocked_achievements' => 'No unlocked achievements yet',
+            'next_available_achievements' => [
+                'First Comment Written',
+                'First Lesson Watched'
+            ],
+            'current_badge' => 'Beginner',
+            'next_badge' => 'Intermediate',
+            'remaining_to_unlock_next_badge' => 4,
+        ]);
+        $this->assertIsString($response['unlocked_achievements']);
+        $this->assertCount(2, $response['next_available_achievements']);
+        $this->assertIsArray($response['next_available_achievements']);
+        $this->assertIsString($response['current_badge']);
+        $this->assertIsString($response['next_badge']);
+        $this->assertIsInt($response['remaining_to_unlock_next_badge']);
+        $this->resetAllAchievementValues();
+    }
+
+     /**
+     * test
+     * A basic test example.
+     */
+    public function test_should_assert_that_user_has_achieve_five_lesson_and_first_comment_achievements_and_has_1_achievements_to_unlock_intermediate_badge(): void
+    {
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create();
+        $this->lessonWatcher(5, $user);
+        $this->commentWriter(1, $user);
+        $response = $this->get("/users/{$user->id}/achievements");
+        $response->assertJsonFragment([
+            'unlocked_achievements' => [
+                'First Comment Written',
+                'First Lesson Watched',
+                '5 Lessons Watched'
+            ],
+            'next_available_achievements' => [
+                '3 Comments Written',
+                '10 Lessons Watched'
+            ],
+            'current_badge' => 'Beginner',
+            'next_badge' => 'Intermediate',
+            'remaining_to_unlock_next_badge' => 1,
+        ]);
+        $this->assertCount(3, $response['unlocked_achievements']);
+        $this->assertCount(2, $response['next_available_achievements']);
+        $this->assertIsArray($response['next_available_achievements']);
+        $this->assertIsArray($response['unlocked_achievements']);
+        $this->assertIsString($response['current_badge']);
+        $this->assertIsString($response['next_badge']);
+        $this->assertIsInt($response['remaining_to_unlock_next_badge']);
+        $this->resetAllAchievementValues();
+    }
+
+    /**
+     * test
+     * A basic test example.
+     */
+    public function test_should_assert_that_user_has_achieve_five_lesson_and_three_comment_achievements_and_has_4_achievements_to_unlock_advanced_badge(): void
+    {
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create();
+        $this->lessonWatcher(5, $user);
+        $this->commentWriter(3, $user);
+        $response = $this->get("/users/{$user->id}/achievements");
+        $response->assertJsonFragment([
+            'unlocked_achievements' => [
+                'First Comment Written',
+                'First Lesson Watched',
+                '5 Lessons Watched',
+                '3 Comments Written',
+            ],
+            'next_available_achievements' => [
+                '10 Lessons Watched',
+                '5 Comments Written'
+            ],
+            'current_badge' => 'Intermediate',
+            'next_badge' => 'Advanced',
+            'remaining_to_unlock_next_badge' => 4,
+        ]);
+        $this->assertCount(4, $response['unlocked_achievements']);
+        $this->assertCount(2, $response['next_available_achievements']);
+        $this->assertIsArray($response['next_available_achievements']);
+        $this->assertIsArray($response['unlocked_achievements']);
+        $this->assertIsString($response['current_badge']);
+        $this->assertIsString($response['next_badge']);
+        $this->assertIsInt($response['remaining_to_unlock_next_badge']);
+        $this->resetAllAchievementValues();
+    }
+
+    /**
+     * test
+     * A basic test example.
+     */
+    public function test_should_assert_that_user_has_achieve_ten_lesson_and_three_comment_achievements_and_has_3_achievements_to_unlock_advanced_badge(): void
+    {
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create();
+        $this->lessonWatcher(10, $user);
+        $this->commentWriter(3, $user);
+        $response = $this->get("/users/{$user->id}/achievements");
+        $response->assertJsonFragment([
+            'unlocked_achievements' => [
+                'First Comment Written',
+                'First Lesson Watched',
+                '5 Lessons Watched',
+                '3 Comments Written',
+                '10 Lessons Watched',
+            ],
+            'next_available_achievements' => [
+                '5 Comments Written',
+                '25 Lessons Watched'
+            ],
+            'current_badge' => 'Intermediate',
+            'next_badge' => 'Advanced',
+            'remaining_to_unlock_next_badge' => 3,
+        ]);
+        $this->assertCount(5, $response['unlocked_achievements']);
+        $this->assertCount(2, $response['next_available_achievements']);
+        $this->assertIsArray($response['next_available_achievements']);
+        $this->assertIsArray($response['unlocked_achievements']);
+        $this->assertIsString($response['current_badge']);
+        $this->assertIsString($response['next_badge']);
+        $this->assertIsInt($response['remaining_to_unlock_next_badge']);
+        $this->resetAllAchievementValues();
+    }
+
+    /**
+     * test
+     * A basic test example.
+     */
+    public function test_should_assert_that_user_has_achieve_ten_lesson_and_five_comment_achievements_and_has_2_achievements_to_unlock_advanced_badge(): void
+    {
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create();
+        $this->lessonWatcher(10, $user);
+        $this->commentWriter(5, $user);
+        $response = $this->get("/users/{$user->id}/achievements");
+        $response->assertJsonFragment([
+            'unlocked_achievements' => [
+                'First Comment Written',
+                'First Lesson Watched',
+                '5 Lessons Watched',
+                '3 Comments Written',
+                '10 Lessons Watched',
+                '5 Comments Written',
+            ],
+            'next_available_achievements' => [
+                '25 Lessons Watched',
+                '10 Comments Written'
+            ],
+            'current_badge' => 'Intermediate',
+            'next_badge' => 'Advanced',
+            'remaining_to_unlock_next_badge' => 2,
+        ]);
+        $this->assertCount(6, $response['unlocked_achievements']);
+        $this->assertCount(2, $response['next_available_achievements']);
+        $this->assertIsArray($response['next_available_achievements']);
+        $this->assertIsArray($response['unlocked_achievements']);
+        $this->assertIsString($response['current_badge']);
+        $this->assertIsString($response['next_badge']);
+        $this->assertIsInt($response['remaining_to_unlock_next_badge']);
+        $this->resetAllAchievementValues();
+    }
+
+    /**
+     * test
+     * A basic test example.
+     */
+    public function test_should_assert_that_user_has_achieve_twenty_five_lesson_and_five_comment_achievements_and_has_2_achievements_to_unlock_advanced_badge(): void
+    {
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create();
+        $this->lessonWatcher(25, $user);
+        $this->commentWriter(5, $user);
+        $response = $this->get("/users/{$user->id}/achievements");
+        $response->assertJsonFragment([
+            'unlocked_achievements' => [
+                'First Comment Written',
+                'First Lesson Watched',
+                '5 Lessons Watched',
+                '3 Comments Written',
+                '10 Lessons Watched',
+                '5 Comments Written',
+                '25 Lessons Watched',
+            ],
+            'next_available_achievements' => [
+                '10 Comments Written',
+                '50 Lessons Watched'
+            ],
+            'current_badge' => 'Intermediate',
+            'next_badge' => 'Advanced',
+            'remaining_to_unlock_next_badge' => 1,
+        ]);
+        $this->assertCount(7, $response['unlocked_achievements']);
+        $this->assertCount(2, $response['next_available_achievements']);
+        $this->assertIsArray($response['next_available_achievements']);
+        $this->assertIsArray($response['unlocked_achievements']);
+        $this->assertIsString($response['current_badge']);
+        $this->assertIsString($response['next_badge']);
+        $this->assertIsInt($response['remaining_to_unlock_next_badge']);
+        $this->resetAllAchievementValues();
+    }
+
+    /**
+     * test
+     * A basic test example.
+     */
+    public function test_should_assert_that_user_has_achieve_twenty_five_lesson_and_ten_comment_achievements_and_has_unlocked_advanced_badge(): void
+    {
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create();
+        $this->lessonWatcher(25, $user);
+        $this->commentWriter(10, $user);
+        $response = $this->get("/users/{$user->id}/achievements");
+        $response->assertJsonFragment([
+            'unlocked_achievements' => [
+                'First Comment Written',
+                'First Lesson Watched',
+                '5 Lessons Watched',
+                '3 Comments Written',
+                '10 Lessons Watched',
+                '5 Comments Written',
+                '25 Lessons Watched',
+                '10 Comments Written',
+            ],
+            'next_available_achievements' => [
+                '50 Lessons Watched',
+                '20 Comments Written'
+            ],
+            'current_badge' => 'Advanced',
+            'next_badge' => 'Master',
+            'remaining_to_unlock_next_badge' => 2,
+        ]);
+        $this->assertCount(8, $response['unlocked_achievements']);
+        $this->assertCount(2, $response['next_available_achievements']);
+        $this->assertIsArray($response['next_available_achievements']);
+        $this->assertIsArray($response['unlocked_achievements']);
+        $this->assertIsString($response['current_badge']);
+        $this->assertIsString($response['next_badge']);
+        $this->assertIsInt($response['remaining_to_unlock_next_badge']);
+        $this->resetAllAchievementValues();
+    }
+
+     /**
+     * test
+     * A basic test example.
+     */
+    public function test_should_assert_that_user_has_achieve_fifty_lesson_and_ten_comment_achievements_and_has_1_achievements_to_unlocked_master_badge(): void
+    {
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create();
+        $this->lessonWatcher(50, $user);
+        $this->commentWriter(10, $user);
+        $response = $this->get("/users/{$user->id}/achievements");
+        $response->assertJsonFragment([
+            'unlocked_achievements' => [
+                'First Comment Written',
+                'First Lesson Watched',
+                '5 Lessons Watched',
+                '3 Comments Written',
+                '10 Lessons Watched',
+                '5 Comments Written',
+                '25 Lessons Watched',
+                '10 Comments Written',
+                '50 Lessons Watched',
+            ],
+            'next_available_achievements' => [
+                '20 Comments Written'
+            ],
+            'current_badge' => 'Advanced',
+            'next_badge' => 'Master',
+            'remaining_to_unlock_next_badge' => 1,
+        ]);
+        $this->assertCount(9, $response['unlocked_achievements']);
+        $this->assertCount(1, $response['next_available_achievements']);
+        $this->assertIsArray($response['next_available_achievements']);
+        $this->assertIsArray($response['unlocked_achievements']);
+        $this->assertIsString($response['current_badge']);
+        $this->assertIsString($response['next_badge']);
+        $this->assertIsInt($response['remaining_to_unlock_next_badge']);
+        $this->resetAllAchievementValues();
+    }
+
+    /**
+     * test
+     * A basic test example.
+     */
+    public function test_should_assert_that_user_has_achieve_fifty_lesson_and_twenty_comment_achievements_and_has_unlocked_master_badge(): void
+    {
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create();
+        $this->lessonWatcher(50, $user);
+        $this->commentWriter(20, $user);
+        $response = $this->get("/users/{$user->id}/achievements");
+        $response->assertJsonFragment([
+            'unlocked_achievements' => [
+                'First Comment Written',
+                'First Lesson Watched',
+                '5 Lessons Watched',
+                '3 Comments Written',
+                '10 Lessons Watched',
+                '5 Comments Written',
+                '25 Lessons Watched',
+                '10 Comments Written',
+                '50 Lessons Watched',
+                '20 Comments Written',
+            ],
+            'next_available_achievements' => 'You have unlocked all achievements',
+            'current_badge' => 'Master',
+            'next_badge' => 'You have unlocked all achievements, no next badge available',
+            'remaining_to_unlock_next_badge' => 0,
+        ]);
+        $this->assertCount(10, $response['unlocked_achievements']);
+        $this->assertIsString($response['next_available_achievements']);
+        $this->assertIsArray($response['unlocked_achievements']);
+        $this->assertIsString($response['current_badge']);
+        $this->assertIsString($response['next_badge']);
+        $this->assertIsInt($response['remaining_to_unlock_next_badge']);
+        $this->resetAllAchievementValues();
+    }
+
     public function commentWriter(int $number, User $user): void
     {
         for($i = 0; $i < $number; $i++) {
