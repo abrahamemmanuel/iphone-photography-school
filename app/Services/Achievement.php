@@ -115,6 +115,9 @@ class Achievement
 
     public static function getNextBadge(): string
     {
+        if(count(self::$unlocked_achievements) == 10){
+            return 'You have unlocked all achievements, no next badge available';
+        }
         return self::$next_badge;
     }
 
