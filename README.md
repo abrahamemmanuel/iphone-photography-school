@@ -13,36 +13,65 @@
 -   run `php artisan test`
     There are 31 tests with 354 assertions that cover all possible scenarios
 
-    ✓ should assert that user has no comment written achievements and has 4 achievements to unlock intermediate badge  
-     ✓ should assert that user achieves first comment written achievement and has 3 achievements to unlock intermediate badge  
-     ✓ should assert that user achieves three comment written achievement and has 2 achievements to unlock intermediate badge  
-     ✓ should assert that user achieves five comment written achievement and has 1 achievement to unlock intermediate badge  
-     ✓ should assert that user achieves ten comment written achievement and has 4 achievement to unlocked intermediate badge  
-     ✓ should assert that user achieves twenty comment written achievement and has 4 achievement to unlock advanced badge  
-     ✓ should assert that user has no lesson watched achievements and has 4 achievements to unlock intermediate badge  
-     ✓ should assert that user has achieve first lesson watched achievements and has 3 achievements to unlock intermediate badge
-    ✓ should assert that user has achieve five lesson watched achievements and has 3 achievements to unlock intermediate badge  
-     ✓ should assert that user has achieve ten lesson watched achievements and has 1 achievements to unlock intermediate badge  
-     ✓ should assert that user has achieve twenty five lesson watched achievements and has 4 achievements to unlock advanced badge  
-     ✓ should assert that user has achieve fifty lesson watched achievements and has 3 achievements to unlock advanced badge  
-     ✓ should assert that user has achieve first lesson and first comment achievements and has 2 achievements to unlock intermediate badge  
-     ✓ should assert that user has achieve first lesson and three comment achievements and has 1 achievements to unlock intermediate badge  
-     ✓ should assert that user has achieve first lesson and five comment achievements and has 4 achievements to unlock advanced badge  
-     ✓ should assert that user has achieve first lesson and ten comment achievements and has 3 achievements to unlock advanced badge  
-     ✓ should assert that user has achieve first lesson and twenty comment achievements and has 2 achievements to unlock advanced badge  
-     ✓ should assert that user has achieve five lesson and twenty comment achievements and has 1 achievements to unlock advanced badge  
-     ✓ should assert that user has achieve ten lesson and twenty comment achievements and has 2 achievements to unlock master badge  
-     ✓ should assert that user has achieve twenty five lesson and twenty comment achievements and has 1 achievements to unlock master badge  
-     ✓ should assert that user has achieve fifty lesson and twenty comment achievements and has master badge  
-     ✓ should assert that user has not achieve first lesson and first comment achievements and has 4 achievements to unlock intermediate badge  
-     ✓ should assert that user has achieve five lesson and first comment achievements and has 1 achievements to unlock intermediate badge  
-     ✓ should assert that user has achieve five lesson and three comment achievements and has 4 achievements to unlock advanced badge  
-     ✓ should assert that user has achieve ten lesson and three comment achievements and has 3 achievements to unlock advanced badge  
-     ✓ should assert that user has achieve ten lesson and five comment achievements and has 2 achievements to unlock advanced badge  
-     ✓ should assert that user has achieve twenty five lesson and five comment achievements and has 2 achievements to unlock advanced badge  
-     ✓ should assert that user has achieve twenty five lesson and ten comment achievements and has unlocked advanced badge  
-     ✓ should assert that user has achieve fifty lesson and ten comment achievements and has 1 achievements to unlocked master badge  
-     ✓ should assert that user has achieve fifty lesson and twenty comment achievements and has unlocked master badge
+    ✓ should assert that user has no comment written achievements and has 4 achievements to unlock intermediate badge
+
+    ✓ should assert that user achieves first comment written achievement and has 3 achievements to unlock intermediate badge
+
+    ✓ should assert that user achieves three comment written achievement and has 2 achievements to unlock intermediate badge
+
+    ✓ should assert that user achieves five comment written achievement and has 1 achievement to unlock intermediate badge
+
+    ✓ should assert that user achieves ten comment written achievement and has 4 achievement to unlocked intermediate badge
+
+    ✓ should assert that user achieves twenty comment written achievement and has 4 achievement to unlock advanced badge
+
+    ✓ should assert that user has no lesson watched achievements and has 4 achievements to unlock intermediate badge
+
+    ✓ should assert that user has achieve first lesson watched achievements and has 3 achievements to unlock intermediate badge
+
+    ✓ should assert that user has achieve five lesson watched achievements and has 3 achievements to unlock intermediate badge
+
+    ✓ should assert that user has achieve ten lesson watched achievements and has 1 achievements to unlock intermediate badge
+
+    ✓ should assert that user has achieve twenty five lesson watched achievements and has 4 achievements to unlock advanced badge
+
+    ✓ should assert that user has achieve fifty lesson watched achievements and has 3 achievements to unlock advanced badge
+
+    ✓ should assert that user has achieve first lesson and first comment achievements and has 2 achievements to unlock intermediate badge
+
+    ✓ should assert that user has achieve first lesson and three comment achievements and has 1 achievements to unlock intermediate badge
+
+    ✓ should assert that user has achieve first lesson and five comment achievements and has 4 achievements to unlock advanced badge
+
+    ✓ should assert that user has achieve first lesson and ten comment achievements and has 3 achievements to unlock advanced badge
+
+    ✓ should assert that user has achieve first lesson and twenty comment achievements and has 2 achievements to unlock advanced badge
+
+    ✓ should assert that user has achieve five lesson and twenty comment achievements and has 1 achievements to unlock advanced badge
+
+    ✓ should assert that user has achieve ten lesson and twenty comment achievements and has 2 achievements to unlock master badge
+
+    ✓ should assert that user has achieve twenty five lesson and twenty comment achievements and has 1 achievements to unlock master badge
+
+    ✓ should assert that user has achieve fifty lesson and twenty comment achievements and has master badge
+
+    ✓ should assert that user has not achieve first lesson and first comment achievements and has 4 achievements to unlock intermediate badge
+
+    ✓ should assert that user has achieve five lesson and first comment achievements and has 1 achievements to unlock intermediate badge
+
+    ✓ should assert that user has achieve five lesson and three comment achievements and has 4 achievements to unlock advanced badge
+
+    ✓ should assert that user has achieve ten lesson and three comment achievements and has 3 achievements to unlock advanced badge
+
+    ✓ should assert that user has achieve ten lesson and five comment achievements and has 2 achievements to unlock advanced badge
+
+    ✓ should assert that user has achieve twenty five lesson and five comment achievements and has 2 achievements to unlock advanced badge
+
+    ✓ should assert that user has achieve twenty five lesson and ten comment achievements and has unlocked advanced badge
+
+    ✓ should assert that user has achieve fifty lesson and ten comment achievements and has 1 achievements to unlocked master badge
+
+    ✓ should assert that user has achieve fifty lesson and twenty comment achievements and has unlocked master badge
 
 > note that all the tests are sitting in the root/tests/Feature/ExampleTest.php
 
