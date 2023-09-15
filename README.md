@@ -76,6 +76,7 @@
 > note that all the tests are sitting in the root/tests/Feature/ExampleTest.php
 
 Let's Write Some Tests
+
 **Example:**
 If the user has unlocked the “5 Lessons Watched” and “First Comment Written” achievements only the “10 Lessons Watched” and “3 Comments Written“ achievements should be returned.
 
